@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(obsidian)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+file(GLOB_RECURSE HEADER_FILES FOLLOW_SYMLINKS ${PROJECT_SOURCE_DIR}/include/*.hpp)
+file(GLOB_RECURSE SRC_FILES FOLLOW_SYMLINKS ${PROJECT_SOURCE_DIR}/src/*.cpp)
+
+add_library(obsidian SHARED ${HEADER_FILES} ${SRC_FILES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        VS_DEBUGGER_COMMAND "flintandsteel.exe"
+        VS_DEBUGGER_COMMAND_ARGUMENTS "\"$<TARGET_FILE:${PROJECT_NAME}>\""
+        VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>/"
+)
