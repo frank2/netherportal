@@ -1,9 +1,3 @@
-[submodule "lib/keystone"]
-	path = lib/keystone
-	url = https://github.com/keystone-engine/keystone.git
-[submodule "lib/minhook"]
-	path = lib/minhook
-	url = https://github.com/TsudaKageyu/minhook.git
 [submodule "lib/easyloggingpp"]
 	path = lib/easyloggingpp
 	url = https://github.com/amrayn/easyloggingpp.git
