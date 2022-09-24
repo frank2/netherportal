@@ -5,10 +5,11 @@ project(flintandsteel)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 add_definitions( -D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING )
+# min/max preprocessor macros seem to conflict with some function definitions in argparse
+add_definitions( -DNOMINMAX )
 
-# add_subdirectory(${PROJECT_SOURCE_DIR}/lib/keystone)
+# add_subdirectory(${PROJECT_SOURCE_DIR}/../lib/keystone)
 
-# include_directories(${PROJECT_SOURCE_DIR}/lib/keystone/include)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE HEADER_FILES FOLLOW_SYMLINKS ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/*.hpp)
@@ -18,9 +19,11 @@ source_group(TREE "${PROJECT_SOURCE_DIR}" PREFIX "Header Files" FILES ${HEADER_F
 source_group(TREE "${PROJECT_SOURCE_DIR}" PREFIX "Source Files" FILES ${SRC_FILES})
 
 add_executable(flintandsteel ${HEADER_FILES} ${SRC_FILES})
+add_dependencies(flintandsteel argparse)
 
 # target_link_libraries(flintandsteel keystone)
 target_include_directories(flintandsteel PUBLIC
-  #"${PROJECT_SOURCE_DIR}/lib/keystone/include"
+  #"${PROJECT_SOURCE_DIR}/../lib/keystone/include"
+  "${PROJECT_SOURCE_DIR}/../lib/argparse/include"
   "${PROJECT_SOURCE_DIR}/include"
 )

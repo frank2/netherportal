@@ -5,8 +5,7 @@ project(obsidian)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_GENERATOR_PLATFORM x64)
-
-#add_subdirectory(${PROJECT_SOURCE_DIR}/lib/minhook)
+add_definitions( -D_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING )
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -17,15 +16,24 @@ source_group(TREE "${PROJECT_SOURCE_DIR}" PREFIX "Header Files" FILES ${HEADER_F
 source_group(TREE "${PROJECT_SOURCE_DIR}" PREFIX "Source Files" FILES ${SRC_FILES})
 
 add_library(obsidian SHARED ${HEADER_FILES} ${SRC_FILES})
+add_dependencies(obsidian flintandsteel easyloggingpp)
 
 #target_link_libraries(obsidian minhook)
+
+target_link_directories(obsidian PUBLIC
+  "$ENV{JAVA_HOME}/lib"
+)
+target_link_libraries(obsidian easyloggingpp jvm jawt)
 target_include_directories(obsidian PUBLIC
-  #"${PROJECT_SOURCE_DIR}/lib/minhook/include"
   "${PROJECT_SOURCE_DIR}/include"
+  "${PROJECT_SOURCE_DIR}/../lib/easyloggingpp/src"
+  "$ENV{JAVA_HOME}/include"
+  "$ENV{JAVA_HOME}/include/win32"
+  #"${PROJECT_SOURCE_DIR}/../lib/minhook/include"
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
         VS_DEBUGGER_COMMAND "$<TARGET_FILE_DIR:${PROJECT_NAME}>/../../flintandsteel/$<CONFIG>/flintandsteel.exe"
-        VS_DEBUGGER_COMMAND_ARGUMENTS "\"Minecraft 1.19.2 - Singleplayer\" \"$<TARGET_FILE:${PROJECT_NAME}>\""
+        VS_DEBUGGER_COMMAND_ARGUMENTS "--payload \"$<TARGET_FILE:${PROJECT_NAME}>\" --window-title \"Minecraft 1.19.2 - Singleplayer\""
         VS_DEBUGGER_WORKING_DIRECTORY "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
 )
