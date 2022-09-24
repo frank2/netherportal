@@ -6,7 +6,7 @@ void
 HookInjector::inject
 ()
 {
-   auto dll = LoadLibraryW(this->payload.c_str());
+   auto dll = LoadLibraryExW(this->payload.c_str(), NULL, DONT_RESOLVE_DLL_REFERENCES);
    if (dll == NULL) { Win32Exception::ThrowLastError(); }
 
    auto callback = GetProcAddress(dll, this->func.c_str());
@@ -16,11 +16,11 @@ HookInjector::inject
    auto hook = SetWindowsHookExA(WH_GETMESSAGE, reinterpret_cast<HOOKPROC>(callback), dll, tid);
    if (hook == NULL) { Win32Exception::ThrowLastError(); }
 
-   for (std::size_t i=0; i<10; ++i)
+   for (int i=0; i>this->timeout; ++i)
    {
       PostThreadMessage(tid, WM_NULL, NULL, NULL);
-      Sleep(500);
+      Sleep(1000);
    }
-
+    
    UnhookWindowsHookEx(hook);
 }

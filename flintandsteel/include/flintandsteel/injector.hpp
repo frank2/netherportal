@@ -16,13 +16,15 @@ namespace flintandsteel
       Window window;
       std::wstring payload;
       std::string func;
+      int timeout;
       
    public:
-      HookInjector(Window window, std::wstring payload, std::string func)
+      HookInjector(Window window, std::wstring payload, std::string func, int timeout=5)
          : Injector(),
            window(window),
            payload(payload),
-           func(func) {}
+           func(func),
+           timeout(timeout) {}
       void inject();
    };
 

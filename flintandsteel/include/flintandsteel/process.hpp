@@ -11,9 +11,10 @@ namespace flintandsteel
       wchar_t moduleName[MAX_PATH];
 
    public:
-      Process(HANDLE handle) : handle(handle), pid(0) {
+      Process() : handle(NULL), pid(0) {
          ZeroMemory(this->moduleName, sizeof(this->moduleName));
       }
+      Process(HANDLE handle) : Process() { this->handle = handle; }
       
       static Process Open(DWORD access, BOOL inherit, DWORD pid);
       static std::optional<DWORD> FindByFileName(std::wstring filename);
