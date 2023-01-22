@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(build_static_lib ON CACHE BOOL "Build easylogging as a static library.")
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/easyloggingpp)
 add_subdirectory(${PROJECT_SOURCE_DIR}/lib/argparse)
+add_subdirectory(${PROJECT_SOURCE_DIR}/lib/json)
 
 add_subdirectory(flintandsteel)
 add_subdirectory(obsidian)

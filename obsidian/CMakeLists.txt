@@ -16,17 +16,18 @@ source_group(TREE "${PROJECT_SOURCE_DIR}" PREFIX "Header Files" FILES ${HEADER_F
 source_group(TREE "${PROJECT_SOURCE_DIR}" PREFIX "Source Files" FILES ${SRC_FILES})
 
 add_library(obsidian SHARED ${HEADER_FILES} ${SRC_FILES})
-add_dependencies(obsidian flintandsteel easyloggingpp)
+add_dependencies(obsidian flintandsteel easyloggingpp nlohmann_json)
 
 #target_link_libraries(obsidian minhook)
 
 target_link_directories(obsidian PUBLIC
   "$ENV{JAVA_HOME}/lib"
 )
-target_link_libraries(obsidian easyloggingpp jvm jawt)
+target_link_libraries(obsidian PRIVATE urlmon easyloggingpp jvm jawt nlohmann_json::nlohmann_json)
 target_include_directories(obsidian PUBLIC
   "${PROJECT_SOURCE_DIR}/include"
   "${PROJECT_SOURCE_DIR}/../lib/easyloggingpp/src"
+  "${PROJECT_SOURCE_DIR}/../lib/json/include"
   "$ENV{JAVA_HOME}/include"
   "$ENV{JAVA_HOME}/include/win32"
   #"${PROJECT_SOURCE_DIR}/../lib/minhook/include"
